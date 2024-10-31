@@ -1,0 +1,12 @@
+.large-discounted-item {
+    flex: 1 1 48%;
+    order: 1;
+    min-width: 360px;
+}
+
+.small-discounted-item {
+    flex: 1 1 23%;
+    order: 2;
+    min-width: 300px;
+    max-width: 326px;
+}

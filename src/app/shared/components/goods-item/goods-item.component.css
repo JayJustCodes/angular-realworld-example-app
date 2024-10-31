@@ -1,0 +1,10 @@
+.discount-highlighted {
+    .discount-badge {
+        background-color: #ff0000;
+    }
+
+    .product-img {
+        width: 100%;
+        max-width: 570px;
+    }
+}
