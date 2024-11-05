@@ -2,7 +2,6 @@
     <app-goods-item
         *ngFor="let goodsItem of sellingItemsList"
         [goodsItem]="goodsItem"
-        [ngClass]="goodsItem.discount > 50 ? 'large-discounted-item': 'small-discounted-item'"
     >
     </app-goods-item>
 </div>

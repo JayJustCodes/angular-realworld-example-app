@@ -23,6 +23,8 @@ export class GoodsListComponent implements OnInit {
             this.sellingItemsList = data;
         });
 
+        console.log(this.sellingItemsList);
+
         this.destroyRef.onDestroy(() => {
             subscription.unsubscribe();
         });

@@ -10,31 +10,33 @@ import { type GoodsItem } from "../../models/goods-item.model";
     templateUrl: "goods-item.component.html",
     styleUrl: "goods-item.component.css"
 })
-export class GoodsItemComponent implements OnInit {
+//export class GoodsItemComponent implements OnInit {
+export class GoodsItemComponent {
     @Input({ required: true }) goodsItem!: GoodsItem;
 
     get discountHighlightedClass(): string | null {
-        return this.goodsItem.discount > 50 ? "discount-highlighted" : null;
+        // return this.goodsItem.discount > 50 ? "discount-highlighted" : null;
+         return null;
     }
 
     timeRemaining: string = "";
 
     private intervalId: any;
 
-    ngOnInit(): void {
-        if (this.goodsItem.discountEndDate) {
-            this.intervalId = setInterval(() => {
-                this.timeRemaining =
-                    this.calculateTimeRemaining(this.goodsItem.discountEndDate) || "";
-            }, 1000);
-        }
-    }
+    // ngOnInit(): void {
+    //     if (this.goodsItem.discountEndDate) {
+    //         this.intervalId = setInterval(() => {
+    //             this.timeRemaining =
+    //                 this.calculateTimeRemaining(this.goodsItem.discountEndDate) || "";
+    //         }, 1000);
+    //     }
+    // }
 
-    ngOnDestroy(): void {
-        if (this.intervalId) {
-            clearInterval(this.intervalId);
-        }
-    }
+    // ngOnDestroy(): void {
+    //     if (this.intervalId) {
+    //         clearInterval(this.intervalId);
+    //     }
+    // }
 
     calculateTimeRemaining(endDate: string | null): string | null {
         if (!endDate) return null;
