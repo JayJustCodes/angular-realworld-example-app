@@ -9,22 +9,29 @@ import { type GoodsItem } from "../../models/goods-item.model";
     standalone: true,
     imports: [GoodsItemComponent, CommonModule],
     templateUrl: "./goods-list.component.html",
-    styleUrl: "./goods-list.component.css"
+    styleUrl: "./goods-list.component.css",
 })
 export class GoodsListComponent implements OnInit {
-    goodsItemsService = inject(GoodsItemsService);
+    private readonly goodsService = inject(GoodsItemsService);
+
+    private readonly destroyRef = inject(DestroyRef);
 
     sellingItemsList: GoodsItem[] = [];
 
-    private destroyRef = inject(DestroyRef);
-
     ngOnInit(): void {
-        const subscription = this.goodsItemsService.getGoodsItems().subscribe((data) => {
-            this.sellingItemsList = data;
-        });
+        this.loadGoodsItems();
+    }
 
-        console.log(this.sellingItemsList);
-
+    private loadGoodsItems(): void {
+        const subscription = this.goodsService.getGoodsItems().subscribe(
+            (data) => {
+                this.sellingItemsList = data;
+                console.log(this.sellingItemsList);
+            },
+            (error) => {
+                console.error("Error fetching goods items", error);
+            },
+        );
         this.destroyRef.onDestroy(() => {
             subscription.unsubscribe();
         });
