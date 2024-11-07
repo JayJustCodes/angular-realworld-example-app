@@ -58,4 +58,8 @@ export class GoodsListComponent implements OnInit {
             subscription.unsubscribe();
         });
     }
+
+    getDiscountForItem(itemId: number): Discounts | null {
+        return this.discountsList.find((discount) => discount.goods.includes(itemId)) || null;
+    }
 }

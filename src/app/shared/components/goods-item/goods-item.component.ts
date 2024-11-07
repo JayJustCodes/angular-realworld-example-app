@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule, CurrencyPipe } from "@angular/common";
 import { TruncatePipe } from "../../pipes/truncate.pipe";
 import { type GoodsItem } from "../../models/goods-item.model";
+import { type Discounts } from "../../models/discounts.model";
 
 @Component({
     selector: "app-goods-item",
@@ -13,6 +14,7 @@ import { type GoodsItem } from "../../models/goods-item.model";
 //export class GoodsItemComponent implements OnInit {
 export class GoodsItemComponent {
     @Input({ required: true }) goodsItem!: GoodsItem;
+    @Input() discount: Discounts | null = null;
 
     get discountHighlightedClass(): string | null {
         // return this.goodsItem.discount > 50 ? "discount-highlighted" : null;
