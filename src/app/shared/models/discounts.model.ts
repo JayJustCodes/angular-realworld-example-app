@@ -1,5 +1,5 @@
 export interface Discounts {
-    value: number;
+    valuePercentage: number;
     endDate: string | null;
-    goods: number[];
+    goodsIds: number[];
 }
