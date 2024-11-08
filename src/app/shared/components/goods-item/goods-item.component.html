@@ -10,8 +10,6 @@
         >
             {{ discountValue }}% off
         </div>
-        <!-- </div> -->
-        <!-- <div> -->
         <!-- Product Image -->
         <figure class="my-4 flex justify-center">
             <img
@@ -21,20 +19,23 @@
             />
         </figure>
         <div>
-            <!-- Price Section -->
+            <!-- Discount Price Section -->
             <section class="text-center mb-4">
                 <p class="text-red-500 text-2xl font-bold">
-                    {{ goodsItem.price | currency: 'EUR'}}
+                    {{ (discountValue ? discountedPrice : goodsItem.price) | currency: 'EUR'}}
                 </p>
-                <!-- <p class="text-gray-400 line-through"> -->
-                <!--     {{ goodsItem.price | currency: 'EUR'}} -->
-                <!-- </p> -->
+                <p *ngIf="discountValue" class="text-gray-400 line-through">
+                    <s>{{ goodsItem.price | currency: 'EUR'}}</s>
+                </p>
                 <p class="text-gray-500">{{ goodsItem.seller }}</p>
             </section>
 
             <!-- Product Description -->
             <section class="text-center mb-4">
-                <p class="text-gray-600 text-sm">{{ discountValue && discountValue > 50 ? goodsItem.name : (goodsItem.name | truncate: 30) }}</p>
+                <p class="text-gray-600 text-sm">
+                    {{ discountValue && discountValue > 50 ? goodsItem.name : (goodsItem.name |
+                    truncate: 30) }}
+                </p>
             </section>
         </div>
     </div>

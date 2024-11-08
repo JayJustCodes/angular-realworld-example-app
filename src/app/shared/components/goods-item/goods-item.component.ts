@@ -28,6 +28,12 @@ export class GoodsItemComponent implements OnInit {
         return this.discountValue && this.discountValue > 50 ? "discount-highlighted" : null;
     }
 
+    get discountedPrice(): number | null {
+        return (this.goodsItem?.price != null && this.discountValue != null)
+        ? this.goodsItem.price * (1 - this.discountValue / 100)
+        : null;
+    }
+
     timeRemaining: string = "";
 
     private intervalId: any;
