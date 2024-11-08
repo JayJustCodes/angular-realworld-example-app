@@ -9,36 +9,42 @@ import { type Discounts } from "../../models/discounts.model";
     standalone: true,
     imports: [CommonModule, CurrencyPipe, TruncatePipe],
     templateUrl: "goods-item.component.html",
-    styleUrl: "goods-item.component.css"
+    styleUrl: "goods-item.component.css",
 })
-//export class GoodsItemComponent implements OnInit {
-export class GoodsItemComponent {
+export class GoodsItemComponent implements OnInit {
     @Input({ required: true }) goodsItem!: GoodsItem;
+
     @Input() discount: Discounts | null = null;
 
+    get discountValue(): number | null {
+        return this.discount?.value ?? null;
+    }
+
+    get discountEndDate(): string | null {
+        return this.discount?.endDate ?? null;
+    }
+
     get discountHighlightedClass(): string | null {
-        // return this.goodsItem.discount > 50 ? "discount-highlighted" : null;
-         return null;
+        return this.discountValue && this.discountValue > 50 ? "discount-highlighted" : null;
     }
 
     timeRemaining: string = "";
 
     private intervalId: any;
 
-    // ngOnInit(): void {
-    //     if (this.goodsItem.discountEndDate) {
-    //         this.intervalId = setInterval(() => {
-    //             this.timeRemaining =
-    //                 this.calculateTimeRemaining(this.goodsItem.discountEndDate) || "";
-    //         }, 1000);
-    //     }
-    // }
+    ngOnInit(): void {
+        if (this.discountEndDate) {
+            this.intervalId = setInterval(() => {
+                this.timeRemaining = this.calculateTimeRemaining(this.discountEndDate) || "";
+            }, 1000);
+        }
+    }
 
-    // ngOnDestroy(): void {
-    //     if (this.intervalId) {
-    //         clearInterval(this.intervalId);
-    //     }
-    // }
+    ngOnDestroy(): void {
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+        }
+    }
 
     calculateTimeRemaining(endDate: string | null): string | null {
         if (!endDate) return null;

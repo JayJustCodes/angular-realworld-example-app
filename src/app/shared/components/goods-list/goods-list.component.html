@@ -3,6 +3,7 @@
         *ngFor="let goodsItem of sellingItemsList"
         [goodsItem]="goodsItem"
         [discount]="getDiscountForItem(goodsItem.id)"
+        [ngClass]="getDiscountClass(goodsItem.id)"
     >
     </app-goods-item>
 </div>
