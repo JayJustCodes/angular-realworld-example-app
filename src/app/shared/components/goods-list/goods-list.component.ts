@@ -1,9 +1,10 @@
-import { Component, inject, OnInit, DestroyRef } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { forkJoin } from "rxjs";
 import { GoodsItemComponent } from "../goods-item/goods-item.component";
 import { GoodsItemsService } from "../../services/goods-items.service";
 import { DiscountsService } from "../../services/discounts.service";
+import { LoggingService } from "../../services/logging.service";
 import { type Discounts } from "../../models/discounts.model";
 import { type GoodsItem } from "../../models/goods-item.model";
 
@@ -15,11 +16,11 @@ import { type GoodsItem } from "../../models/goods-item.model";
     styleUrl: "./goods-list.component.css",
 })
 export class GoodsListComponent implements OnInit {
-    private readonly goodsService = inject(GoodsItemsService);
-
-    private readonly discountsService = inject(DiscountsService);
-
-    private readonly destroyRef = inject(DestroyRef);
+    constructor(
+        private readonly goodsService: GoodsItemsService,
+        private readonly discountsService: DiscountsService,
+        private readonly loggingService: LoggingService,
+    ) {}
 
     sellingItemsList: GoodsItem[] = [];
 
@@ -46,11 +47,11 @@ export class GoodsListComponent implements OnInit {
     ): void {
         this.sellingItemsList = loadedGoodsItems;
         this.discountsList = loadedDiscountItems;
-        console.log("goods and discounts", loadedGoodsItems, loadedDiscountItems);
+        this.loggingService.log("Goods and discounts loaded successfully", { loadedGoodsItems, loadedDiscountItems });
     }
 
     private handleDataLoadError(error: any): void {
-        console.error("Error fetching goods or discounts", error);
+        this.loggingService.error("Failed to load goods or discounts", error);
     }
 
     getDiscountForItem(itemId: number): Discounts | null {
