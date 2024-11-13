@@ -5,15 +5,15 @@
     <!-- Discount Badge -->
     <div class="relative">
         <div
-            *ngIf="discountValue"
+            *ngIf="discountedItem.discountValue"
             class="discount-badge absolute top-0 left-0 bg-red-400 text-white text-sm rounded-full px-4 py-2 max-w-screen-2xl"
         >
-            {{ discountValue }}% off
+            {{ discountedItem.discountValue }}% off
         </div>
         <!-- Product Image -->
         <figure class="my-4 flex justify-center">
             <img
-                [src]="goodsItem.imageUrl"
+                [src]="discountedItem.imageUrl"
                 alt="Kitchen appliance product"
                 class="product-img w-40 h-40 object-cover rounded-lg"
             />
@@ -22,19 +22,20 @@
             <!-- Discount Price Section -->
             <section class="text-center mb-4">
                 <p class="text-red-500 text-2xl font-bold">
-                    {{ (discountValue ? discountedPrice : goodsItem.price) | currency: 'EUR'}}
+                    {{ (discountedItem.discountValue ? discountedItem.discountedPrice :
+                    discountedItem.price) | currency: 'EUR'}}
                 </p>
-                <p *ngIf="discountValue" class="text-gray-400 line-through">
-                    <s>{{ goodsItem.price | currency: 'EUR'}}</s>
+                <p *ngIf="discountedItem.discountValue" class="text-gray-400 line-through">
+                    <s>{{ discountedItem.price | currency: 'EUR'}}</s>
                 </p>
-                <p class="text-gray-500">{{ goodsItem.seller }}</p>
+                <p class="text-gray-500">{{ discountedItem.seller }}</p>
             </section>
 
             <!-- Product Description -->
             <section class="text-center mb-4">
                 <p class="text-gray-600 text-sm">
-                    {{ discountValue && discountValue > 50 ? goodsItem.name : (goodsItem.name |
-                    truncate: 30) }}
+                    {{ discountedItem.discountValue && discountedItem.discountValue > 50 ?
+                    discountedItem.name : (discountedItem.name | truncate: 30) }}
                 </p>
             </section>
         </div>
@@ -42,11 +43,11 @@
 
     <!-- Additional Info -->
     <section class="flex between items-center text-gray-500 text-sm border-t pt-2">
-        <div *ngIf="goodsItem.shipping" class="flex-1 text-center">
-            <p>{{ goodsItem.shipping }}</p>
+        <div *ngIf="discountedItem.shipping" class="flex-1 text-center">
+            <p>{{ discountedItem.shipping }}</p>
         </div>
-        <div *ngIf="goodsItem.condition" class="flex-1 text-center">
-            <p>{{ goodsItem.condition }}</p>
+        <div *ngIf="discountedItem.condition" class="flex-1 text-center">
+            <p>{{ discountedItem.condition }}</p>
         </div>
         <div *ngIf="timeRemaining" class="flex-1 text-center">
             <p class="min-h-[2rem] flex flex-col justify-center items-center w-[126px]">

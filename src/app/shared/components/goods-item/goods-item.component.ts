@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule, CurrencyPipe } from "@angular/common";
 import { TruncatePipe } from "../../pipes/truncate.pipe";
-import { type GoodsItem } from "../../models/goods-item.model";
-import { type Discounts } from "../../models/discounts.model";
+import { type DiscountedItems } from "../../models/discounted-items.model";
 
 @Component({
     selector: "app-goods-item",
@@ -12,26 +11,12 @@ import { type Discounts } from "../../models/discounts.model";
     styleUrl: "goods-item.component.css",
 })
 export class GoodsItemComponent implements OnInit {
-    @Input({ required: true }) goodsItem!: GoodsItem;
-
-    @Input() discount: Discounts | null = null;
-
-    get discountValue(): number | null {
-        return this.discount?.value ?? null;
-    }
-
-    get discountEndDate(): string | null {
-        return this.discount?.endDate ?? null;
-    }
+    @Input({ required: true }) discountedItem!: DiscountedItems;
 
     get discountHighlightedClass(): string | null {
-        return this.discountValue && this.discountValue > 50 ? "discount-highlighted" : null;
-    }
-
-    get discountedPrice(): number | null {
-        return (this.goodsItem?.price != null && this.discountValue != null)
-        ? this.goodsItem.price * (1 - this.discountValue / 100)
-        : null;
+        return this.discountedItem.discountValue && this.discountedItem.discountValue > 50
+            ? "discount-highlighted"
+            : null;
     }
 
     timeRemaining: string = "";
@@ -39,9 +24,10 @@ export class GoodsItemComponent implements OnInit {
     private intervalId: any;
 
     ngOnInit(): void {
-        if (this.discountEndDate) {
+        if (this.discountedItem.discountEndDate) {
             this.intervalId = setInterval(() => {
-                this.timeRemaining = this.calculateTimeRemaining(this.discountEndDate) || "";
+                this.timeRemaining =
+                    this.calculateTimeRemaining(this.discountedItem.discountEndDate) || "";
             }, 1000);
         }
     }
