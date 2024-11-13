@@ -1,23 +1,23 @@
 [
     {
-        "valuePercentage": 72,
+        "value": 72,
         "endDate": "2024-11-15T23:59:59Z",
-        "goodsIds": [1012]
+        "goods": [1012]
     },
     {
-        "valuePercentage": 68,
+        "value": 68,
         "endDate": null,
-        "goodsIds": [1056]
+        "goods": [1056]
     },
     {
-        "valuePercentage": 45,
+        "value": 45,
         "endDate": "2024-12-31T23:59:59Z",
-        "goodsIds": [1177]
+        "goods": [1177]
     },
     {
-        "valuePercentage": 40,
+        "value": 40,
         "endDate": "2024-11-30T23:59:59Z",
-        "goodsIds": [1123]
+        "goods": [1123]
     }
 ]
 

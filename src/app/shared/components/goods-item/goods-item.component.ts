@@ -17,7 +17,7 @@ export class GoodsItemComponent implements OnInit {
     @Input() discount: Discounts | null = null;
 
     get discountValue(): number | null {
-        return this.discount?.valuePercentage ?? null;
+        return this.discount?.value ?? null;
     }
 
     get discountEndDate(): string | null {

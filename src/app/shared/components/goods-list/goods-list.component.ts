@@ -60,11 +60,11 @@ export class GoodsListComponent implements OnInit {
     }
 
     getDiscountForItem(itemId: number): Discounts | null {
-        return this.discountsList.find((discount) => discount.goodsIds.includes(itemId)) || null;
+        return this.discountsList.find((discount) => discount.goods.includes(itemId)) || null;
     }
 
     getDiscountClass(goodsItemId: number): string {
         const discount = this.getDiscountForItem(goodsItemId);
-        return discount && discount.valuePercentage > 50 ? "large-discounted-item" : "small-discounted-item";
+        return discount && discount.value > 50 ? "large-discounted-item" : "small-discounted-item";
     }
 }
