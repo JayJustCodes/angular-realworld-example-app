@@ -1,5 +1,6 @@
 import { Component, inject, OnInit, DestroyRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { forkJoin } from "rxjs";
 import { GoodsItemComponent } from "../goods-item/goods-item.component";
 import { GoodsItemsService } from "../../services/goods-items.service";
 import { DiscountsService } from "../../services/discounts.service";
@@ -25,38 +26,31 @@ export class GoodsListComponent implements OnInit {
     discountsList: Discounts[] = [];
 
     ngOnInit(): void {
-        this.loadGoodsItems();
-        this.loadDiscounts();
+        this.loadData();
     }
 
-    private loadGoodsItems(): void {
-        const subscription = this.goodsService.getGoodsItems().subscribe(
-            (data: GoodsItem[]) => {
-                this.sellingItemsList = data;
-                console.log(this.sellingItemsList);
-            },
-            (error: any) => {
-                console.error("Error fetching goods items", error);
-            },
-        );
-        this.destroyRef.onDestroy(() => {
-            subscription.unsubscribe();
+    private loadData(): void {
+        forkJoin({
+            loadedGoodsItems: this.goodsService.getGoodsItems(),
+            loadedDiscountItems: this.discountsService.getDiscounts(),
+        }).subscribe({
+            next: ({ loadedGoodsItems, loadedDiscountItems }) =>
+                this.handleDataLoadSuccess(loadedGoodsItems, loadedDiscountItems),
+            error: (error) => this.handleDataLoadError(error),
         });
     }
 
-    private loadDiscounts(): void {
-        const subscription = this.discountsService.getDiscounts().subscribe(
-            (data: Discounts[]) => {
-                this.discountsList = data;
-                console.log("discounts", this.discountsList);
-            },
-            (error: any) => {
-                console.error("Error fetching discounts", error);
-            },
-        );
-        this.destroyRef.onDestroy(() => {
-            subscription.unsubscribe();
-        });
+    private handleDataLoadSuccess(
+        loadedGoodsItems: GoodsItem[],
+        loadedDiscountItems: Discounts[],
+    ): void {
+        this.sellingItemsList = loadedGoodsItems;
+        this.discountsList = loadedDiscountItems;
+        console.log("goods and discounts", loadedGoodsItems, loadedDiscountItems);
+    }
+
+    private handleDataLoadError(error: any): void {
+        console.error("Error fetching goods or discounts", error);
     }
 
     getDiscountForItem(itemId: number): Discounts | null {
