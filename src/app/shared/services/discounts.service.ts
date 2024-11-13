@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Discounts } from "../models/discounts.model";
 
-const DISCOUNTS_URL = "assets/mock-data/task-3-2/discounts.json";
+const DISCOUNTS_URL = "http://localhost:3000/discounts";
 
 @Injectable({
     providedIn: "root",
