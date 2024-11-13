@@ -2,16 +2,18 @@ import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { forkJoin } from "rxjs";
 import { GoodsItemComponent } from "../goods-item/goods-item.component";
+import { SpinnerComponent } from "../spinner/spinner.component";
 import { GoodsItemsService } from "../../services/goods-items.service";
 import { DiscountsService } from "../../services/discounts.service";
 import { LoggingService } from "../../services/logging.service";
+import { LoadingService } from "../../services/loading.service";
 import { type Discounts } from "../../models/discounts.model";
 import { type GoodsItem } from "../../models/goods-item.model";
 
 @Component({
     selector: "app-goods-list",
     standalone: true,
-    imports: [GoodsItemComponent, CommonModule],
+    imports: [GoodsItemComponent, CommonModule, SpinnerComponent],
     templateUrl: "./goods-list.component.html",
     styleUrl: "./goods-list.component.css",
 })
@@ -20,6 +22,7 @@ export class GoodsListComponent implements OnInit {
         private readonly goodsService: GoodsItemsService,
         private readonly discountsService: DiscountsService,
         private readonly loggingService: LoggingService,
+        private readonly loadingService: LoadingService,
     ) {}
 
     sellingItemsList: GoodsItem[] = [];
@@ -31,6 +34,8 @@ export class GoodsListComponent implements OnInit {
     }
 
     private loadData(): void {
+        this.loadingService.show();
+
         forkJoin({
             loadedGoodsItems: this.goodsService.getGoodsItems(),
             loadedDiscountItems: this.discountsService.getDiscounts(),
@@ -45,12 +50,17 @@ export class GoodsListComponent implements OnInit {
         loadedGoodsItems: GoodsItem[],
         loadedDiscountItems: Discounts[],
     ): void {
+        this.loadingService.hide();
         this.sellingItemsList = loadedGoodsItems;
         this.discountsList = loadedDiscountItems;
-        this.loggingService.log("Goods and discounts loaded successfully", { loadedGoodsItems, loadedDiscountItems });
+        this.loggingService.log("Goods and discounts loaded successfully", {
+            loadedGoodsItems,
+            loadedDiscountItems,
+        });
     }
 
     private handleDataLoadError(error: any): void {
+        this.loadingService.hide();
         this.loggingService.error("Failed to load goods or discounts", error);
     }
 
