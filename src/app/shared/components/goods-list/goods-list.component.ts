@@ -20,14 +20,14 @@ import { type DiscountedItems } from "../../models/discounted-items.model";
     styleUrl: "./goods-list.component.css",
 })
 export class GoodsListComponent implements OnInit {
+    discountedItemsList: DiscountedItems[] = [];
+
     constructor(
         private readonly goodsService: GoodsItemsService,
         private readonly discountsService: DiscountsService,
         private readonly loggingService: LoggingService,
         private readonly loadingService: LoadingService,
     ) {}
-
-    discountedItemsList: DiscountedItems[] = [];
 
     ngOnInit(): void {
         this.loadData();
@@ -37,13 +37,13 @@ export class GoodsListComponent implements OnInit {
         this.loadingService.show();
 
         forkJoin({
-            loadedGoodsItems: this.goodsService.getGoodsItems(),
-            loadedDiscountItems: this.discountsService.getDiscounts(),
+            goods: this.goodsService.getGoodsItems(),
+            discounts: this.discountsService.getDiscounts(),
         })
             .pipe(
-                map(({ loadedGoodsItems, loadedDiscountItems }) => {
-                    this.discountedItemsList = loadedGoodsItems.map((item) => {
-                        const discountForItem = loadedDiscountItems.find((discount) =>
+                map(({ goods, discounts }) => {
+                    return goods.map((item) => {
+                        const discountForItem = discounts.find((discount) =>
                             discount.goods.includes(item.id),
                         );
 
@@ -64,24 +64,19 @@ export class GoodsListComponent implements OnInit {
                             discountEndDate: discountForItem ? discountForItem.endDate : null,
                         };
                     });
-                    return { loadedGoodsItems, loadedDiscountItems };
                 }),
             )
             .subscribe({
-                next: ({ loadedGoodsItems, loadedDiscountItems }) =>
-                    this.handleDataLoadSuccess(loadedGoodsItems, loadedDiscountItems),
+                next: (discountedItems) => this.handleDataLoadSuccess(discountedItems),
                 error: (error) => this.handleDataLoadError(error),
             });
     }
 
-    private handleDataLoadSuccess(
-        loadedGoodsItems: GoodsItem[],
-        loadedDiscountItems: Discounts[],
-    ): void {
+    private handleDataLoadSuccess(discountedItemsList: DiscountedItems[]): void {
         this.loadingService.hide();
+        this.discountedItemsList = discountedItemsList;
         this.loggingService.log("Goods and discounts loaded successfully", {
-            loadedGoodsItems,
-            loadedDiscountItems,
+            discountedItemsList,
         });
     }
 
