@@ -40,36 +40,32 @@ export class GoodsListComponent implements OnInit {
             goods: this.goodsService.getGoodsItems(),
             discounts: this.discountsService.getDiscounts(),
         })
-            .pipe(
-                map(({ goods, discounts }) => {
-                    return goods.map((item) => {
-                        const discountForItem = discounts.find((discount) =>
-                            discount.goods.includes(item.id),
-                        );
-
-                        return {
-                            id: item.id,
-                            price: item.price,
-                            discountedPrice: discountForItem
-                                ? parseFloat(
-                                      (item.price * (1 - discountForItem.value / 100)).toFixed(2),
-                                  )
-                                : null,
-                            name: item.name,
-                            seller: item.seller,
-                            shipping: item.shipping,
-                            condition: item.condition,
-                            imageUrl: item.imageUrl,
-                            discountValue: discountForItem ? discountForItem.value : null,
-                            discountEndDate: discountForItem ? discountForItem.endDate : null,
-                        };
-                    });
-                }),
-            )
+            .pipe(map(({ goods, discounts }) => this.mapDiscountedItems(goods, discounts)))
             .subscribe({
                 next: (discountedItems) => this.handleDataLoadSuccess(discountedItems),
                 error: (error) => this.handleDataLoadError(error),
             });
+    }
+
+    private mapDiscountedItems(goods: GoodsItem[], discounts: Discounts[]): DiscountedItems[] {
+        return goods.map((item) => {
+            const discountForItem = discounts.find((discount) => discount.goods.includes(item.id));
+
+            return {
+                id: item.id,
+                price: item.price,
+                discountedPrice: discountForItem
+                    ? parseFloat((item.price * (1 - discountForItem.value / 100)).toFixed(2))
+                    : null,
+                name: item.name,
+                seller: item.seller,
+                shipping: item.shipping,
+                condition: item.condition,
+                imageUrl: item.imageUrl,
+                discountValue: discountForItem ? discountForItem.value : null,
+                discountEndDate: discountForItem ? discountForItem.endDate : null,
+            };
+        });
     }
 
     private handleDataLoadSuccess(discountedItemsList: DiscountedItems[]): void {
