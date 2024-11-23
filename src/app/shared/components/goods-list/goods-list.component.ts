@@ -11,7 +11,7 @@ import { LoadingService } from "../../services/loading.service";
 import { type Discounts } from "../../models/discounts.model";
 import { type GoodsItem } from "../../models/goods-item.model";
 import { type LoadingState } from "../../models/loading-state.model";
-import { type DiscountedItems as DiscountedItem } from "../../models/discounted-items.model";
+import { type DiscountedItem } from "../../models/discounted-items.model";
 
 @Component({
     selector: "app-goods-list",

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule, CurrencyPipe } from "@angular/common";
 import { TruncatePipe } from "../../pipes/truncate.pipe";
-import { type DiscountedItems } from "../../models/discounted-items.model";
+import { type DiscountedItem } from "../../models/discounted-items.model";
 
 @Component({
     selector: "app-goods-item",
@@ -11,7 +11,7 @@ import { type DiscountedItems } from "../../models/discounted-items.model";
     styleUrl: "goods-item.component.css",
 })
 export class GoodsItemComponent implements OnInit {
-    @Input({ required: true }) discountedItem!: DiscountedItems;
+    @Input({ required: true }) discountedItem!: DiscountedItem;
 
     get discountHighlightedClass(): string | null {
         return this.discountedItem.discountValue && this.discountedItem.discountValue > 50
