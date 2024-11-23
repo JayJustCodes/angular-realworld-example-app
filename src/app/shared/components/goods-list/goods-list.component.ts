@@ -2,16 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Observable, forkJoin } from "rxjs";
 import { map } from "rxjs/operators";
-import { GoodsItemComponent } from "../goods-item/goods-item.component";
-import { SpinnerComponent } from "../spinner/spinner.component";
-import { GoodsItemsService } from "../../services/goods-items.service";
-import { DiscountsService } from "../../services/discounts.service";
-import { LoggingService } from "../../services/logging.service";
-import { LoadingService } from "../../services/loading.service";
-import { type Discounts } from "../../models/discounts.model";
-import { type GoodsItem } from "../../models/goods-item.model";
-import { type LoadingState } from "../../models/loading-state.model";
-import { type DiscountedItem } from "../../models/discounted-items.model";
+import { GoodsItemComponent, SpinnerComponent } from "../.";
+import {
+    GoodsItemsService,
+    DiscountsService,
+    LoggingService,
+    LoadingService,
+} from "../../services";
+import { Discounts, GoodsItem, LoadingState, DiscountedItem } from "../../models";
 
 @Component({
     selector: "app-goods-list",
