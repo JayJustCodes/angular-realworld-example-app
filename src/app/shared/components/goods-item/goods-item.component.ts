@@ -1,20 +1,22 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule, CurrencyPipe } from "@angular/common";
 import { TruncatePipe } from "../../pipes/truncate.pipe";
-import { type GoodsItem } from "../../models/goods-item.model";
+import { type DiscountedItem } from "../../models/discounted-items.model";
 
 @Component({
     selector: "app-goods-item",
     standalone: true,
     imports: [CommonModule, CurrencyPipe, TruncatePipe],
     templateUrl: "goods-item.component.html",
-    styleUrl: "goods-item.component.css"
+    styleUrl: "goods-item.component.css",
 })
 export class GoodsItemComponent implements OnInit {
-    @Input({ required: true }) goodsItem!: GoodsItem;
+    @Input({ required: true }) discountedItem!: DiscountedItem;
 
     get discountHighlightedClass(): string | null {
-        return this.goodsItem.discount > 50 ? "discount-highlighted" : null;
+        return this.discountedItem.discountValue && this.discountedItem.discountValue > 50
+            ? "discount-highlighted"
+            : null;
     }
 
     timeRemaining: string = "";
@@ -22,10 +24,10 @@ export class GoodsItemComponent implements OnInit {
     private intervalId: any;
 
     ngOnInit(): void {
-        if (this.goodsItem.discountEndDate) {
+        if (this.discountedItem.discountEndDate) {
             this.intervalId = setInterval(() => {
                 this.timeRemaining =
-                    this.calculateTimeRemaining(this.goodsItem.discountEndDate) || "";
+                    this.calculateTimeRemaining(this.discountedItem.discountEndDate) || "";
             }, 1000);
         }
     }

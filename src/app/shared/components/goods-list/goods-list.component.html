@@ -1,8 +1,9 @@
 <div class="flex flex-wrap justify-center w-7/10 gap-6">
     <app-goods-item
-        *ngFor="let goodsItem of sellingItemsList"
-        [goodsItem]="goodsItem"
-        [ngClass]="goodsItem.discount > 50 ? 'large-discounted-item': 'small-discounted-item'"
+        *ngFor="let discountedItem of discountedItemsList"
+        [discountedItem]="discountedItem"
+        [ngClass]="discountedItem.discountValue && discountedItem.discountValue > 50 ? 'large-discounted-item' : 'small-discounted-item'"
     >
     </app-goods-item>
+    <app-spinner></app-spinner>
 </div>
