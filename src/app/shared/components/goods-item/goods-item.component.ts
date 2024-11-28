@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { CommonModule, CurrencyPipe } from "@angular/common";
 import { TruncatePipe } from "../../pipes/truncate.pipe";
 import { type DiscountedItem } from "../../models/discounted-items.model";
@@ -12,6 +13,8 @@ import { type DiscountedItem } from "../../models/discounted-items.model";
 })
 export class GoodsItemComponent implements OnInit {
     @Input({ required: true }) discountedItem!: DiscountedItem;
+
+    constructor(private router: Router) {}
 
     get discountHighlightedClass(): string | null {
         return this.discountedItem.discountValue && this.discountedItem.discountValue > 50
@@ -36,6 +39,10 @@ export class GoodsItemComponent implements OnInit {
         if (this.intervalId) {
             clearInterval(this.intervalId);
         }
+    }
+
+    navigateToDetailsPage(itemId: number): void {
+        this.router.navigate(["/item-details", itemId]);
     }
 
     calculateTimeRemaining(endDate: string | null): string | null {

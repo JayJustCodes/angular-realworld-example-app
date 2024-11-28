@@ -2,57 +2,59 @@
     [ngClass]="discountHighlightedClass"
     class="border border-red-300 p-4 rounded-lg shadow-lg min-h-full"
 >
-    <!-- Discount Badge -->
-    <div class="relative">
-        <div
-            *ngIf="discountedItem.discountValue"
-            class="discount-badge absolute top-0 left-0 bg-red-400 text-white text-sm rounded-full px-4 py-2 max-w-screen-2xl"
-        >
-            {{ discountedItem.discountValue }}% off
-        </div>
-        <!-- Product Image -->
-        <figure class="my-4 flex justify-center">
-            <img
-                [src]="discountedItem.imageUrl"
-                alt="Kitchen appliance product"
-                class="product-img w-40 h-40 object-cover rounded-lg"
-            />
-        </figure>
-        <div>
-            <!-- Discount Price Section -->
-            <section class="text-center mb-4">
-                <p class="text-red-500 text-2xl font-bold">
-                    {{ (discountedItem.discountValue ? discountedItem.discountedPrice :
-                    discountedItem.price) | currency: 'EUR'}}
-                </p>
-                <p *ngIf="discountedItem.discountValue" class="text-gray-400 line-through">
-                    <s>{{ discountedItem.price | currency: 'EUR'}}</s>
-                </p>
-                <p class="text-gray-500">{{ discountedItem.seller }}</p>
-            </section>
+    <div (click)="navigateToDetailsPage(discountedItem.id)">
+        <!-- Discount Badge -->
+        <div class="relative">
+            <div
+                *ngIf="discountedItem.discountValue"
+                class="discount-badge absolute top-0 left-0 bg-red-400 text-white text-sm rounded-full px-4 py-2 max-w-screen-2xl"
+            >
+                {{ discountedItem.discountValue }}% off
+            </div>
+            <!-- Product Image -->
+            <figure class="my-4 flex justify-center">
+                <img
+                    [src]="discountedItem.imageUrl"
+                    alt="Kitchen appliance product"
+                    class="product-img w-40 h-40 object-cover rounded-lg"
+                />
+            </figure>
+            <div>
+                <!-- Discount Price Section -->
+                <section class="text-center mb-4">
+                    <p class="text-red-500 text-2xl font-bold">
+                        {{ (discountedItem.discountValue ? discountedItem.discountedPrice :
+                        discountedItem.price) | currency: 'EUR'}}
+                    </p>
+                    <p *ngIf="discountedItem.discountValue" class="text-gray-400 line-through">
+                        <s>{{ discountedItem.price | currency: 'EUR'}}</s>
+                    </p>
+                    <p class="text-gray-500">{{ discountedItem.seller }}</p>
+                </section>
 
-            <!-- Product Description -->
-            <section class="text-center mb-4">
-                <p class="text-gray-600 text-sm">
-                    {{ discountedItem.discountValue && discountedItem.discountValue > 50 ?
-                    discountedItem.name : (discountedItem.name | truncate: 30) }}
-                </p>
-            </section>
+                <!-- Product Description -->
+                <section class="text-center mb-4">
+                    <p class="text-gray-600 text-sm">
+                        {{ discountedItem.discountValue && discountedItem.discountValue > 50 ?
+                        discountedItem.name : (discountedItem.name | truncate: 30) }}
+                    </p>
+                </section>
+            </div>
         </div>
+
+        <!-- Additional Info -->
+        <section class="flex between items-center text-gray-500 text-sm border-t pt-2">
+            <div *ngIf="discountedItem.shipping" class="flex-1 text-center">
+                <p>{{ discountedItem.shipping }}</p>
+            </div>
+            <div *ngIf="discountedItem.condition" class="flex-1 text-center">
+                <p>{{ discountedItem.condition }}</p>
+            </div>
+            <div *ngIf="timeRemaining" class="flex-1 text-center">
+                <p class="min-h-[2rem] flex flex-col justify-center items-center w-[126px]">
+                    {{ timeRemaining }}
+                </p>
+            </div>
+        </section>
     </div>
-
-    <!-- Additional Info -->
-    <section class="flex between items-center text-gray-500 text-sm border-t pt-2">
-        <div *ngIf="discountedItem.shipping" class="flex-1 text-center">
-            <p>{{ discountedItem.shipping }}</p>
-        </div>
-        <div *ngIf="discountedItem.condition" class="flex-1 text-center">
-            <p>{{ discountedItem.condition }}</p>
-        </div>
-        <div *ngIf="timeRemaining" class="flex-1 text-center">
-            <p class="min-h-[2rem] flex flex-col justify-center items-center w-[126px]">
-                {{ timeRemaining }}
-            </p>
-        </div>
-    </section>
 </article>
