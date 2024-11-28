@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { CommonModule, CurrencyPipe } from "@angular/common";
 import { TruncatePipe } from "../../pipes/truncate.pipe";
-import { type DiscountedItem } from "../../models/discounted-items.model";
+import { type DiscountedItem } from "../../models";
 
 @Component({
     selector: "app-goods-item",
@@ -14,7 +14,19 @@ import { type DiscountedItem } from "../../models/discounted-items.model";
 export class GoodsItemComponent implements OnInit {
     @Input({ required: true }) discountedItem!: DiscountedItem;
 
+    private intervalId: any;
+
+    public timeRemaining: string = "";
+
     constructor(private router: Router) {}
+
+    public ngOnInit(): void {
+        this.startDiscountCountdown();
+    }
+
+    public ngOnDestroy(): void {
+        this.clearDiscountCountdown();
+    }
 
     get discountHighlightedClass(): string | null {
         return this.discountedItem.discountValue && this.discountedItem.discountValue > 50
@@ -22,11 +34,11 @@ export class GoodsItemComponent implements OnInit {
             : null;
     }
 
-    timeRemaining: string = "";
+    public navigateToDetailsPage(itemId: number): void {
+        this.router.navigate(["/item-details", itemId]);
+    }
 
-    private intervalId: any;
-
-    ngOnInit(): void {
+    private startDiscountCountdown(): void {
         if (this.discountedItem.discountEndDate) {
             this.intervalId = setInterval(() => {
                 this.timeRemaining =
@@ -35,17 +47,13 @@ export class GoodsItemComponent implements OnInit {
         }
     }
 
-    ngOnDestroy(): void {
+    private clearDiscountCountdown(): void {
         if (this.intervalId) {
             clearInterval(this.intervalId);
         }
     }
 
-    navigateToDetailsPage(itemId: number): void {
-        this.router.navigate(["/item-details", itemId]);
-    }
-
-    calculateTimeRemaining(endDate: string | null): string | null {
+    private calculateTimeRemaining(endDate: string | null): string | null {
         if (!endDate) return null;
 
         const diff = new Date(endDate).getTime() - new Date().getTime();
@@ -63,7 +71,7 @@ export class GoodsItemComponent implements OnInit {
         }
     }
 
-    formatTimeUnit(unit: number): string {
+    private formatTimeUnit(unit: number): string {
         return unit < 10 ? `0${unit}` : `${unit}`;
     }
 }
