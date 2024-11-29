@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
+import { ItemDetailsService } from "../../shared/services";
+import { type ItemDetails } from "../../shared/models";
 
 @Component({
     selector: "app-item-details",
@@ -10,26 +11,34 @@ import { HttpClient } from "@angular/common/http";
     styleUrl: "./item-details.component.css",
 })
 export class ItemDetailsComponent {
-    private itemId!: String;
-    itemDetails: any;
+    private itemId!: string;
+    private itemDetails: ItemDetails | null = null;
 
     constructor(
-        private route: ActivatedRoute,
-        private http: HttpClient,
+        private readonly route: ActivatedRoute,
+        private readonly itemDetailsService: ItemDetailsService,
     ) {}
 
     public ngOnInit(): void {
-        const idParam: string | null = this.route.snapshot.paramMap.get("id")!;
+        const idParam: string | null = this.route.snapshot.paramMap.get("id");
         if (idParam) {
-            this.itemId = idParam;
+            this.setItemId(idParam);
         }
         this.fetchItemDetails();
     }
 
     private fetchItemDetails(): void {
-        this.http.get(`http://localhost:3000/item/${this.itemId}`).subscribe((data: any) => {
-            this.itemDetails = data;
-            console.log("data", data);
+        this.itemDetailsService.fetchDetails(this.itemId).subscribe((data: ItemDetails) => {
+            this.setItemDetails(data);
+            console.log("item details", this.itemDetails);
         });
+    }
+
+    public setItemDetails(details: ItemDetails): void {
+        this.itemDetails = details;
+    }
+
+    public setItemId(id: string): void {
+        this.itemId = id;
     }
 }
