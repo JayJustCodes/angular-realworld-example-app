@@ -1,0 +1,87 @@
+[
+    {
+        "id": 1012,
+        "title": "Ceramic Teapot",
+        "description": "Crafted from high-quality ceramic, this elegant teapot is perfect for cozy tea moments. Its intricate design and smooth finish make it a beautiful addition to any kitchen. Ideal for both everyday use and special occasions.",
+        "reviews": 2,
+        "imageUrls": [
+            {
+                "state": "New",
+                "small": "https://fastly.picsum.photos/id/225/800/600.jpg?hmac=lOoXTxKd-KjTXE1y7w5YJ6z66Q_4im4ArGkRVlcEGG8",
+                "large": "https://fastly.picsum.photos/id/225/1500/979.jpg?hmac=jvGoek9ng_Y0GaBbzxN0KJhHaiPtk1VfRcukK8R8FxQ"
+            },
+            {
+                "state": "Second Hand",
+                "small": "https://fastly.picsum.photos/id/225/800/600.jpg?grayscale&hmac=OaByKmbDqqkp7h69N6ef0ku-JipVf9X3irwMkXbibJ4",
+                "large": "https://fastly.picsum.photos/id/225/3000/1958.jpg?grayscale&hmac=hvNNtIdDkoN57k4SWx-FZzZH-jjNoQ-THtHMxvW6BS8"
+            }
+        ],
+        "quantityAvailable": 30,
+        "state": ["New", "Second Hand"]
+    },
+    {
+        "id": 1056,
+        "title": "Hippie Van",
+        "description": "This retro-style hippie van is perfect for those who love adventure and nostalgia. It’s designed for road trips, with ample space and a unique, classic look. A must-have for collectors and travel enthusiasts.",
+        "reviews": 0,
+        "imageUrls": [
+            {
+                "state": "New",
+                "small": "https://fastly.picsum.photos/id/183/800/600.jpg?hmac=-XhBYekqmzB1EQWjxQu8qXDM6rQsvqOOXOiBvAAd_1A",
+                "large": "https://fastly.picsum.photos/id/183/2316/1544.jpg?hmac=908ZBWKqGdL9kio38tCq2ViwMm3DjLUtkjU_6SWNa9k"
+            }
+        ],
+        "quantityAvailable": 12,
+        "state": ["New"]
+    },
+    {
+        "id": 1098,
+        "title": "Passenger Plane",
+        "description": "Travel in style with this detailed passenger plane model. Whether displayed in a living room or used for imaginative play, it brings a sense of adventure. A great gift for aviation enthusiasts and children alike.",
+        "reviews": 1,
+        "imageUrls": [
+            {
+                "state": "New",
+                "small": "https://fastly.picsum.photos/id/364/800/600.jpg?hmac=CXX7fTpAlosb_CFm9Ls9zH1b7c4_2aMpqzh25hucsAU",
+                "large": "https://fastly.picsum.photos/id/364/5000/2917.jpg?hmac=xXeSnI5JaHB8KssawSc9gjgKEorKVXx7T_YgPCf2F-A"
+            }
+        ],
+        "quantityAvailable": 15,
+        "state": ["New"]
+    },
+    {
+        "id": 1123,
+        "title": "Kindle Reader",
+        "description": "Enjoy reading anywhere with this sleek Kindle Reader featuring adjustable lighting. Its lightweight design and crisp display ensure hours of comfortable reading, whether indoors or outdoors. A perfect gift for book lovers.",
+        "reviews": 2,
+        "imageUrls": [
+            {
+                "state": "New",
+                "small": "https://fastly.picsum.photos/id/367/800/600.jpg?hmac=U_tarPACscxIzju2gvNlO-2YKEe4wFBNwzz9bNd5kV4",
+                "large": "https://fastly.picsum.photos/id/367/4928/3264.jpg?hmac=H-2OwMlcYm0a--Jd2qaZkXgFZFRxYyGrkrYjupP8Sro"
+            },
+            {
+                "state": "Second Hand",
+                "small": "https://fastly.picsum.photos/id/367/800/600.jpg?grayscale&hmac=9ByX3Bn7HvK7QNC5QrkWAQ4DMYUcxWQ3jGrOuinJqAE",
+                "large": "https://fastly.picsum.photos/id/367/4928/3264.jpg?grayscale&hmac=GU7YnPu5NivWSVzBK24Muko7z38D__-P8C4C04QmZgs"
+            }
+        ],
+        "quantityAvailable": 50,
+        "state": ["New", "Second Hand"]
+    },
+    {
+        "id": 1177,
+        "title": "Lightweight Laptop",
+        "description": "This sleek and lightweight laptop is designed for both productivity and entertainment. Its fast performance and portable design make it perfect for on-the-go professionals. A great value for anyone seeking a reliable device.",
+        "reviews": 410,
+        "imageUrls": [
+            {
+                "state": "New",
+                "small": "https://fastly.picsum.photos/id/370/800/600.jpg?hmac=Amsw5wPaJMy7a0TyPU11tlp--IsM4qB-6YB4JO41kNw",
+                "large": "https://fastly.picsum.photos/id/370/4928/3264.jpg?hmac=UGe0txSnG4hhV-fAoi7e3mTnvQFhYYNcPJJbYFePh5Q"
+            }
+        ],
+        "quantityAvailable": 25,
+        "state": ["New"]
+    }
+]
