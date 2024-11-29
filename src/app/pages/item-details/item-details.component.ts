@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
     selector: "app-item-details",
@@ -9,15 +10,26 @@ import { ActivatedRoute } from "@angular/router";
     styleUrl: "./item-details.component.css",
 })
 export class ItemDetailsComponent {
-    private itemId!: number;
+    private itemId!: String;
+    itemDetails: any;
 
-    constructor(private route: ActivatedRoute) {}
+    constructor(
+        private route: ActivatedRoute,
+        private http: HttpClient,
+    ) {}
 
     public ngOnInit(): void {
         const idParam: string | null = this.route.snapshot.paramMap.get("id")!;
         if (idParam) {
-            this.itemId = Number(idParam);
+            this.itemId = idParam;
         }
-        console.log("id", this.itemId);
+        this.fetchItemDetails();
+    }
+
+    private fetchItemDetails(): void {
+        this.http.get(`http://localhost:3000/item/${this.itemId}`).subscribe((data: any) => {
+            this.itemDetails = data;
+            console.log("data", data);
+        });
     }
 }
